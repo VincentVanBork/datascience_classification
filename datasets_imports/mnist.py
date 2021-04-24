@@ -12,4 +12,4 @@ def load_mnist_for_neural():
     #unpack with new axis
     x_train = x_train[..., tf.newaxis].astype("float32")
     x_test = x_test[..., tf.newaxis].astype("float32")
-    return x_train,y_train, x_test, y_test
+    return x_train, y_train, x_test, y_test

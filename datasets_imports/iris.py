@@ -4,6 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 def load_iris_for_neural():
+    """
+        x,y train and x,y test,  (in, out) <- dim returned
+    """
     iris = load_iris()
     X = iris['data']
     y = iris['target']
