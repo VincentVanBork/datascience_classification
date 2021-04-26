@@ -31,3 +31,4 @@ def load_iris_for_neural():
     n_classes = Y.shape[1]
 
     return X_train, Y_train, X_test, Y_test, (n_features, n_classes)
+
