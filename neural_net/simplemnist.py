@@ -1,20 +1,19 @@
 from datasets_imports.mnist import load_mnist_for_neural
-import tensorflow  as tf
+import tensorflow as tf
 
 from tensorflow.keras.layers import Dense, Flatten, Conv2D
 from tensorflow.keras import Model
-from numpy import ndarray
 
-x_train,y_train, x_test, y_test = load_mnist_for_neural()
+x_train, y_train, x_test, y_test = load_mnist_for_neural()
 
 train_ds = tf.data.Dataset.from_tensor_slices(
     (x_train, y_train)).shuffle(10000).batch(32)
 
 test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(32)
 
-class MyModel(Model):
+class MnistModel(Model):
     def __init__(self):
-        super(MyModel, self).__init__()
+        super(MnistModel, self).__init__()
 
         self.conv1 = Conv2D(32, 3, activation='relu')
         self.flatten = Flatten()
@@ -27,9 +26,9 @@ class MyModel(Model):
         x = self.d1(x)
         return self.d2(x)
 
-# Create an instance of the model
-model = MyModel()
 
+# Create an instance of the model
+model = MnistModel()
 
 loss_object = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
@@ -45,7 +44,7 @@ test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
 @tf.function
 def train_step(images, labels):
     with tf.GradientTape() as tape:
-        #recording gradients
+        # recording gradients
         # training=True is only needed if there are layers with different
         # behavior during training versus inference (e.g. Dropout).
         predictions = model(images, training=True)
@@ -90,3 +89,4 @@ if __name__ == "__main__":
             f'Test Loss: {test_loss.result()}, '
             f'Test Accuracy: {test_accuracy.result() * 100}'
         )
+        model.save("./mnist_model")
