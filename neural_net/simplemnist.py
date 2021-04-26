@@ -89,4 +89,6 @@ if __name__ == "__main__":
             f'Test Loss: {test_loss.result()}, '
             f'Test Accuracy: {test_accuracy.result() * 100}'
         )
-        model.save("./mnist_model")
+
+
+        # model.save("./mnist_model")

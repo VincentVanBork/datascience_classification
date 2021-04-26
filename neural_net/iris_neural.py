@@ -1,3 +1,5 @@
+import csv
+
 import tensorflow as tf
 from tensorflow.keras import Model
 from tensorflow.keras.layers import Dense
@@ -17,21 +19,21 @@ class IrisModel(Model):
         super(IrisModel, self).__init__()
         self.num_layers = num_layers
         # self.input_layer = Dense(8, activation='relu', input_shape=(4,))
-        for i in range(num_layers):
+        for i in range(num_layers + 1):
             setattr(self, f'hidden{i}', Dense(8, activation='relu', input_shape=(4,)))
         # self.compact = Dense(4, activation='relu')
         self.out_layer = Dense(dims[1], activation="softmax")
 
     def call(self, x):
         # x = self.input_layer(x)
-        for i in range(self.num_layers):
+        for i in range(self.num_layers + 1):
             layer = getattr(self, f'hidden{i}')
             x = layer(x)
         # x = self.compact(x)
         return self.out_layer(x)
 
 
-for layers_diff in range(4):
+for layers_diff in [2]:
     model = IrisModel(layers_diff)
 
     loss_object = tf.keras.losses.CategoricalCrossentropy()
@@ -71,26 +73,36 @@ for layers_diff in range(4):
         test_accuracy(labels, predictions)
 
 
-    EPOCHS = 400
-    for epoch in range(EPOCHS):
+    EPOCHS = 800
 
-        train_loss.reset_states()
-        train_accuracy.reset_states()
-        test_loss.reset_states()
-        test_accuracy.reset_states()
-        for input_values, output_values in train_ds:
-            train_step(input_values, output_values)
+    with open(f'iris_model_{layers_diff}_{EPOCHS}.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['epoch', 'loss', 'accuracy', 'test_loss', 'test_accuracy'])
 
-        for input_values, output_values in test_ds:
-            test_step(input_values, output_values)
+        for epoch in range(EPOCHS):
 
-        print(
-            f'Epoch {epoch + 1}, '
-            f'Loss: {train_loss.result()}, '
-            f'Accuracy: {train_accuracy.result() * 100}, '
-            f'Test Loss: {test_loss.result()}, '
-            f'Test Accuracy: {test_accuracy.result() * 100}'
-        )
+            train_loss.reset_states()
+            train_accuracy.reset_states()
+            test_loss.reset_states()
+            test_accuracy.reset_states()
+            for input_values, output_values in train_ds:
+                train_step(input_values, output_values)
+
+            for input_values, output_values in test_ds:
+                test_step(input_values, output_values)
+
+            writer.writerow([epoch + 1,
+                             f"{train_loss.result()}",
+                             f"{train_accuracy.result() * 100}",
+                             f"{test_loss.result()}",
+                             f"{test_accuracy.result() * 100}"])
+            # print(
+            #     f'Epoch {epoch + 1}, '
+            #     f'Loss: {train_loss.result()}, '
+            #     f'Accuracy: {train_accuracy.result() * 100}, '
+            #     f'Test Loss: {test_loss.result()}, '
+            #     f'Test Accuracy: {test_accuracy.result() * 100}'
+            # )
 
     print(model.summary())
-    model.save(f"./iris_model{layers_diff}_0.33_test")
+    # model.save(f"./iris_model{layers_diff}_0.33_test")
