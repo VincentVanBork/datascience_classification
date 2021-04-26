@@ -1,4 +1,4 @@
-from neural_net.datasets_imports import load_mnist_for_neural
+from datasets_imports import load_mnist_for_neural
 import tensorflow  as tf
 
 from tensorflow.keras.layers import Dense, Flatten, Conv2D
