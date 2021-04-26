@@ -1,9 +1,8 @@
-from datasets_imports.mnist import load_mnist_for_neural
+from neural_net.datasets_imports import load_mnist_for_neural
 import tensorflow  as tf
 
 from tensorflow.keras.layers import Dense, Flatten, Conv2D
 from tensorflow.keras import Model
-from numpy import ndarray
 
 x_train, y_train, x_test, y_test = load_mnist_for_neural()
 

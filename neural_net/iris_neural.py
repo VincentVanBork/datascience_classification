@@ -1,9 +1,7 @@
 import tensorflow as tf
-from keras.layers import Flatten
 from tensorflow.keras import Model
 from tensorflow.keras.layers import Dense
 from datasets_imports.iris import load_iris_for_neural
-import numpy as np
 
 sizes_train, labels_train, sizes_test, labels_test, dims = load_iris_for_neural()
 print("DIMENSIONS:", dims)
