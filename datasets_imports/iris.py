@@ -3,6 +3,7 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+
 def load_iris_for_neural():
     """
         x,y train and x,y test,  (in, out) <- dim returned
@@ -25,8 +26,8 @@ def load_iris_for_neural():
     X_train, X_test, Y_train, Y_test = train_test_split(
         X_scaled, Y, test_size=0.5, random_state=2)
 
-    #size for the future
+    # size for the future
     n_features = X.shape[1]
     n_classes = Y.shape[1]
 
-    return X_train, Y_train, X_test,  Y_test, (n_features, n_classes)
+    return X_train, Y_train, X_test, Y_test, (n_features, n_classes)
