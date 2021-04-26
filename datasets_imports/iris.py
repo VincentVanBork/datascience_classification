@@ -24,7 +24,7 @@ def load_iris_for_neural():
 
     # Split the data set into training and testing
     X_train, X_test, Y_train, Y_test = train_test_split(
-        X_scaled, Y, test_size=0.5, random_state=2)
+        X_scaled, Y, test_size=0.33, random_state=42)
 
     # size for the future
     n_features = X.shape[1]
