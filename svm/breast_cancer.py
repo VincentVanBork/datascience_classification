@@ -7,7 +7,13 @@ from sklearn.svm import SVC
 from sklearn import metrics
 from sklearn.metrics import classification_report, plot_confusion_matrix, plot_roc_curve
 
+from plot_learning_curve import plot_learning_curve
+
 def experiment(svc):
+    # Plot learning-curve
+    plot_learning_curve(svc, "some title", X_train, y_train)
+    plt.savefig('learning_curve.png')
+
     model_linear.fit(X_train, y_train)
 
     # predict
