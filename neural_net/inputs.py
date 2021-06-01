@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+
 from datasets_imports.cancer import load_cancer_for_neural
 import tensorflow as tf
 
@@ -70,6 +72,8 @@ def cancer_get_model_setup(epoch, train_ds, test_ds):
         test_loss(t_loss)
         test_accuracy(labels, predictions)
 
+    fig,ax = plt.subplots()
+    learning_curve = []
     for epoch in range(epoch):
 
         train_loss.reset_states()
@@ -81,6 +85,12 @@ def cancer_get_model_setup(epoch, train_ds, test_ds):
 
         for input_values, output_values in test_ds:
             test_step(input_values, output_values)
+
+        learning_curve.append(train_loss.result())
+
+    ax.plot(learning_curve)
+    fig.savefig("learning_curve_cancer.png")
+
     return model
 
 
@@ -130,6 +140,8 @@ def prepare_iris_model(epoch, train_ds, test_ds):
 
         test_loss(t_loss)
         test_accuracy(labels, predictions)
+    fig, ax = plt.subplots()
+    learning_curve= []
 
     for epoch in range(epoch):
 
@@ -142,6 +154,13 @@ def prepare_iris_model(epoch, train_ds, test_ds):
 
         for input_values, output_values in test_ds:
             test_step(input_values, output_values)
+
+        learning_curve.append(train_loss.result())
+
+    ax.plot(learning_curve)
+    fig.savefig("learning_curve_iris.png")
+        # plt.show()
+
     return model
 
 
@@ -156,6 +175,9 @@ def mnist_data_input():
 
 
 def prepare_mnist_model(train_ds, test_ds):
+
+    learning_curve = []
+
     # Create an instance of the model
     model = MnistModel()
 
@@ -186,6 +208,7 @@ def prepare_mnist_model(train_ds, test_ds):
         train_loss(loss)
         train_accuracy(labels, predictions)
 
+
     @tf.function
     def test_step(images, labels):
         # training=False is only needed if there are layers with different
@@ -197,6 +220,7 @@ def prepare_mnist_model(train_ds, test_ds):
         test_accuracy(labels, predictions)
 
     EPOCHS = 5
+    fig, ax = plt.subplots()
     for epoch in range(EPOCHS):
 
         train_loss.reset_states()
@@ -206,6 +230,12 @@ def prepare_mnist_model(train_ds, test_ds):
 
         for images, labels in train_ds:
             train_step(images, labels)
+
+        # print(learning_curve)
+        learning_curve.append(train_loss.result())
+
+    ax.plot(learning_curve)
+    fig.savefig("learning_curve_mnist.png")
 
         # for test_images, test_labels in test_ds:
         #     test_step(test_images, test_labels)

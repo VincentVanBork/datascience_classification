@@ -134,5 +134,6 @@ def mnist_metrics():
 
 if __name__ == "__main__":
     ...
-    # iris_metrics()
-    # mnist_metrics()
+    cancer_metrics()
+    iris_metrics()
+    mnist_metrics()
