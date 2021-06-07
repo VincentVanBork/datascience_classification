@@ -1,3 +1,4 @@
+from task5.utils import experiment
 import matplotlib.pyplot as plt
 
 from sklearn import datasets
@@ -23,26 +24,26 @@ X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size = 0.3
 from sklearn import metrics
 from sklearn.metrics import confusion_matrix
 
-# Linear
-model = SVC(kernel='linear')
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+# print("accuracy:", metrics.accuracy_score(y_true=y_test, y_pred=y_pred), "\n")
+# print(metrics.confusion_matrix(y_true=y_test, y_pred=y_pred))
 
-print("accuracy:", metrics.accuracy_score(y_true=y_test, y_pred=y_pred), "\n")
-print(metrics.confusion_matrix(y_true=y_test, y_pred=y_pred))
+experiment(SVC(C=0.001, kernel='linear'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=0.01, kernel='linear'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=0.1, kernel='linear'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=1, kernel='linear'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=10, kernel='linear'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=100, kernel='linear'), X_train, y_train, X_test, y_test)
 
-# Optimal stuff RBF
-model = SVC(C=10, kernel="rbf")
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+experiment(SVC(C=0.001, kernel='rbf'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=0.01, kernel='rbf'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=0.1, kernel='rbf'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=1, kernel='rbf'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=10, kernel='rbf'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=100, kernel='rbf'), X_train, y_train, X_test, y_test)
 
-print("accuracy:", metrics.accuracy_score(y_true=y_test, y_pred=y_pred), "\n")
-print(metrics.confusion_matrix(y_true=y_test, y_pred=y_pred))
-
-# Random stuff
-model = SVC(C=5, kernel="rbf")
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-
-print("accuracy:", metrics.accuracy_score(y_true=y_test, y_pred=y_pred), "\n")
-print(metrics.confusion_matrix(y_true=y_test, y_pred=y_pred))
+experiment(SVC(C=0.001, kernel='sigmoid'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=0.01, kernel='sigmoid'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=0.1, kernel='sigmoid'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=1, kernel='sigmoid'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=10, kernel='sigmoid'), X_train, y_train, X_test, y_test)
+experiment(SVC(C=100, kernel='sigmoid'), X_train, y_train, X_test, y_test)
